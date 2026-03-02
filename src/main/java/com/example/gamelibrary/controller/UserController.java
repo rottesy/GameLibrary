@@ -1,10 +1,10 @@
 package com.example.gamelibrary.controller;
 
-import com.example.gamelibrary.dto.request.UserRequest;
-import com.example.gamelibrary.dto.response.UserResponse;
-import com.example.gamelibrary.dto.response.GameResponse;
-import com.example.gamelibrary.dto.response.ReviewResponse;
-import com.example.gamelibrary.dto.response.CollectionResponse;
+import com.example.gamelibrary.model.dto.request.UserRequest;
+import com.example.gamelibrary.model.dto.response.UserResponse;
+import com.example.gamelibrary.model.dto.response.GameResponse;
+import com.example.gamelibrary.model.dto.response.ReviewResponse;
+import com.example.gamelibrary.model.dto.response.CollectionResponse;
 import com.example.gamelibrary.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

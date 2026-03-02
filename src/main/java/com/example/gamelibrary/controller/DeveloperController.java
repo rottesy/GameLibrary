@@ -1,8 +1,8 @@
 package com.example.gamelibrary.controller;
 
-import com.example.gamelibrary.dto.request.DeveloperRequest;
-import com.example.gamelibrary.dto.response.DeveloperResponse;
-import com.example.gamelibrary.dto.response.GameResponse;
+import com.example.gamelibrary.model.dto.request.DeveloperRequest;
+import com.example.gamelibrary.model.dto.response.DeveloperResponse;
+import com.example.gamelibrary.model.dto.response.GameResponse;
 import com.example.gamelibrary.service.DeveloperService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

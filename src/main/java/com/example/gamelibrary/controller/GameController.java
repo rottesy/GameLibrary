@@ -1,8 +1,8 @@
 package com.example.gamelibrary.controller;
 
-import com.example.gamelibrary.dto.request.GameRequest;
-import com.example.gamelibrary.dto.request.GameCompositeRequest;
-import com.example.gamelibrary.dto.response.GameResponse;
+import com.example.gamelibrary.model.dto.request.GameRequest;
+import com.example.gamelibrary.model.dto.request.GameCompositeRequest;
+import com.example.gamelibrary.model.dto.response.GameResponse;
 import com.example.gamelibrary.service.GameService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

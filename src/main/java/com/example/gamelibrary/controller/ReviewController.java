@@ -1,7 +1,7 @@
 package com.example.gamelibrary.controller;
 
-import com.example.gamelibrary.dto.request.ReviewRequest;
-import com.example.gamelibrary.dto.response.ReviewResponse;
+import com.example.gamelibrary.model.dto.request.ReviewRequest;
+import com.example.gamelibrary.model.dto.response.ReviewResponse;
 import com.example.gamelibrary.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
