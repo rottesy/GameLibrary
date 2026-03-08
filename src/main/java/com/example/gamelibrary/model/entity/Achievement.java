@@ -34,6 +34,7 @@ public class Achievement {
     @Column(length = 2000)
     private String description;
 
+    // LAZY to avoid loading game data when not needed.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "game_id", nullable = false)
     private Game game;

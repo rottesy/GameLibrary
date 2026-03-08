@@ -9,7 +9,11 @@ import com.example.gamelibrary.mapper.GameMapper;
 import com.example.gamelibrary.mapper.ReviewMapper;
 import com.example.gamelibrary.model.dto.request.GameCompositeRequest;
 import com.example.gamelibrary.model.dto.request.GameRequest;
+import com.example.gamelibrary.model.dto.response.AchievementResponse;
 import com.example.gamelibrary.model.dto.response.GameResponse;
+import com.example.gamelibrary.model.dto.response.GameWithAchievementsResponse;
+import com.example.gamelibrary.model.dto.response.GameWithReviewsResponse;
+import com.example.gamelibrary.model.dto.response.ReviewResponse;
 import com.example.gamelibrary.model.entity.Achievement;
 import com.example.gamelibrary.model.entity.Developer;
 import com.example.gamelibrary.model.entity.Game;
@@ -31,6 +35,7 @@ import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -76,13 +81,24 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<GameResponse> findAllWithReviews() {
-        return findAll();
+    public List<GameWithReviewsResponse> findAllWithReviews() {
+        return gameRepository.findAllWithReviews().stream()
+                .map(this::toGameWithReviewsResponse)
+                .toList();
     }
 
     @Override
-    public List<GameResponse> findAllWithAchievements() {
-        return findAll();
+    public List<GameWithReviewsResponse> findAllWithReviewsNaive() {
+        return gameRepository.findAll().stream()
+                .map(this::toGameWithReviewsResponse)
+                .toList();
+    }
+
+    @Override
+    public List<GameWithAchievementsResponse> findAllWithAchievements() {
+        return gameRepository.findAllWithAchievements().stream()
+                .map(this::toGameWithAchievementsResponse)
+                .toList();
     }
 
     @Override
@@ -126,30 +142,15 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public GameResponse createGameWithReviewAndAchievementNoTx(GameCompositeRequest request) {
-        Game game = gameMapper.fromRequest(request.getGame());
-        game.setDeveloper(resolveDeveloper(request.getGame().getDeveloperId()));
-        game.setGenres(resolveGenres(request.getGame().getGenreIds()));
-        Game savedGame = gameRepository.save(game);
-
-        Review review = reviewMapper.fromRequest(request.getReview());
-        review.setGame(savedGame);
-        review.setUser(resolveUser(request.getReview().getUserId()));
-        review.setCreatedAt(LocalDateTime.now());
-        reviewRepository.save(review);
-
-        Achievement achievement = achievementMapper.fromRequest(request.getAchievement());
-        achievement.setGame(savedGame);
-        achievementRepository.save(achievement);
-
-        return gameMapper.toResponse(savedGame);
+        return createGameWithReviewAndAchievementInternal(request);
     }
 
     @Override
     @Transactional
     public GameResponse createGameWithReviewAndAchievementTx(GameCompositeRequest request) {
-        return createGameWithReviewAndAchievementNoTx(request);
+        return createGameWithReviewAndAchievementInternal(request);
     }
 
     @Override
@@ -197,5 +198,47 @@ public class GameServiceImpl implements GameService {
             genres.add(genre);
         }
         return genres;
+    }
+
+    private GameResponse createGameWithReviewAndAchievementInternal(GameCompositeRequest request) {
+        Game game = gameMapper.fromRequest(request.getGame());
+        game.setDeveloper(resolveDeveloper(request.getGame().getDeveloperId()));
+        game.setGenres(resolveGenres(request.getGame().getGenreIds()));
+        Game savedGame = gameRepository.save(game);
+
+        Review review = reviewMapper.fromRequest(request.getReview());
+        review.setGame(savedGame);
+        review.setUser(resolveUser(request.getReview().getUserId()));
+        review.setCreatedAt(LocalDateTime.now());
+        reviewRepository.save(review);
+
+        if (shouldFailComposite(request)) {
+            throw new IllegalStateException("Simulated failure after review save");
+        }
+
+        Achievement achievement = achievementMapper.fromRequest(request.getAchievement());
+        achievement.setGame(savedGame);
+        achievementRepository.save(achievement);
+
+        return gameMapper.toResponse(savedGame);
+    }
+
+    private boolean shouldFailComposite(GameCompositeRequest request) {
+        String name = request.getAchievement().getName();
+        return name != null && name.equalsIgnoreCase("FAIL");
+    }
+
+    private GameWithReviewsResponse toGameWithReviewsResponse(Game game) {
+        List<ReviewResponse> reviews = game.getReviews().stream()
+                .map(reviewMapper::toResponse)
+                .toList();
+        return new GameWithReviewsResponse(gameMapper.toResponse(game), reviews);
+    }
+
+    private GameWithAchievementsResponse toGameWithAchievementsResponse(Game game) {
+        List<AchievementResponse> achievements = game.getAchievements().stream()
+                .map(achievementMapper::toResponse)
+                .toList();
+        return new GameWithAchievementsResponse(gameMapper.toResponse(game), achievements);
     }
 }

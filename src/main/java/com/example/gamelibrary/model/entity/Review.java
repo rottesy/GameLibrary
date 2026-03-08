@@ -38,10 +38,12 @@ public class Review {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    // LAZY to avoid loading game data when not needed.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "game_id", nullable = false)
     private Game game;
 
+    // LAZY to avoid loading user data when not needed.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

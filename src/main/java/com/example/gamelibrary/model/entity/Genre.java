@@ -32,6 +32,7 @@ public class Genre {
     @Column(nullable = false, unique = true, length = 100)
     private String name;
 
+    // LAZY to avoid loading games when not needed.
     @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
     private Set<Game> games = new HashSet<>();
 }

@@ -3,6 +3,8 @@ package com.example.gamelibrary.service;
 import com.example.gamelibrary.model.dto.request.GameCompositeRequest;
 import com.example.gamelibrary.model.dto.request.GameRequest;
 import com.example.gamelibrary.model.dto.response.GameResponse;
+import com.example.gamelibrary.model.dto.response.GameWithAchievementsResponse;
+import com.example.gamelibrary.model.dto.response.GameWithReviewsResponse;
 import java.util.List;
 
 public interface GameService {
@@ -14,9 +16,11 @@ public interface GameService {
 
     List<GameResponse> findByDeveloper(String developer);
 
-    List<GameResponse> findAllWithReviews();
+    List<GameWithReviewsResponse> findAllWithReviews();
 
-    List<GameResponse> findAllWithAchievements();
+    List<GameWithReviewsResponse> findAllWithReviewsNaive();
+
+    List<GameWithAchievementsResponse> findAllWithAchievements();
 
     List<GameResponse> findTopRated(Integer limit);
 

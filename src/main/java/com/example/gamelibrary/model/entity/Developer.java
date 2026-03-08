@@ -32,6 +32,7 @@ public class Developer {
     @Column(nullable = false, unique = true, length = 150)
     private String name;
 
+    // LAZY to avoid loading games when not needed.
     @OneToMany(mappedBy = "developer", fetch = FetchType.LAZY)
     private Set<Game> games = new HashSet<>();
 }

@@ -3,6 +3,8 @@ package com.example.gamelibrary.controller;
 import com.example.gamelibrary.model.dto.request.GameRequest;
 import com.example.gamelibrary.model.dto.request.GameCompositeRequest;
 import com.example.gamelibrary.model.dto.response.GameResponse;
+import com.example.gamelibrary.model.dto.response.GameWithAchievementsResponse;
+import com.example.gamelibrary.model.dto.response.GameWithReviewsResponse;
 import com.example.gamelibrary.service.GameService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -60,14 +62,21 @@ public class GameController {
     @GetMapping("/with-reviews")
     @Operation(summary = "Get all games with their reviews")
     @ApiResponse(responseCode = "200", description = "Games with reviews returned")
-    public ResponseEntity<List<GameResponse>> getAllWithReviews() {
+    public ResponseEntity<List<GameWithReviewsResponse>> getAllWithReviews() {
         return ResponseEntity.ok(gameService.findAllWithReviews());
+    }
+
+    @GetMapping("/with-reviews/naive")
+    @Operation(summary = "Get all games with reviews (naive, N+1)")
+    @ApiResponse(responseCode = "200", description = "Games with reviews returned (naive)")
+    public ResponseEntity<List<GameWithReviewsResponse>> getAllWithReviewsNaive() {
+        return ResponseEntity.ok(gameService.findAllWithReviewsNaive());
     }
 
     @GetMapping("/with-achievements")
     @Operation(summary = "Get all games with achievements")
     @ApiResponse(responseCode = "200", description = "Games with achievements returned")
-    public ResponseEntity<List<GameResponse>> getAllWithAchievements() {
+    public ResponseEntity<List<GameWithAchievementsResponse>> getAllWithAchievements() {
         return ResponseEntity.ok(gameService.findAllWithAchievements());
     }
 
@@ -116,7 +125,10 @@ public class GameController {
     }
 
     @PostMapping("/with-review-and-achievement/no-tx")
-    @Operation(summary = "Create game, review and achievement without transaction")
+    @Operation(
+            summary = "Create game, review and achievement without transaction",
+            description = "Use achievement.name = 'FAIL' to simulate an error after review save"
+    )
     @ApiResponse(responseCode = "201", description = "Composite data created")
     @ApiResponse(responseCode = "400", description = "Validation error")
     public ResponseEntity<GameResponse> createGameWithReviewAndAchievementNoTx(
@@ -127,7 +139,10 @@ public class GameController {
     }
 
     @PostMapping("/with-review-and-achievement/tx")
-    @Operation(summary = "Create game, review and achievement with transaction")
+    @Operation(
+            summary = "Create game, review and achievement with transaction",
+            description = "Use achievement.name = 'FAIL' to simulate an error and rollback"
+    )
     @ApiResponse(responseCode = "201", description = "Composite data created")
     @ApiResponse(responseCode = "400", description = "Validation error")
     public ResponseEntity<GameResponse> createGameWithReviewAndAchievementTx(

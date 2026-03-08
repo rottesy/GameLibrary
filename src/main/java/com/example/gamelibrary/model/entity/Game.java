@@ -1,6 +1,7 @@
 package com.example.gamelibrary.model.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -46,10 +47,12 @@ public class Game {
     @Column
     private Integer rating;
 
+    // LAZY to avoid loading developer data when not needed.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "developer_id")
     private Developer developer;
 
+    // LAZY to avoid loading genres when not needed.
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "game_genres",
@@ -58,10 +61,12 @@ public class Game {
     )
     private Set<Genre> genres = new HashSet<>();
 
-    @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
+    // Reviews are lifecycle-owned by the game: cascade and orphan removal are safe here.
+    @OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews = new HashSet<>();
 
-    @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
+    // Achievements are lifecycle-owned by the game: cascade and orphan removal are safe here.
+    @OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Achievement> achievements = new HashSet<>();
 
     @ManyToMany(mappedBy = "libraryGames", fetch = FetchType.LAZY)
