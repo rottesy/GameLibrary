@@ -26,6 +26,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @AllArgsConstructor
 public class CollectionServiceImpl implements CollectionService {
+    private static final String COLLECTION_NOT_FOUND = "Collection not found: ";
+    private static final String USER_NOT_FOUND = "User not found: ";
+    private static final String GAME_NOT_FOUND = "Game not found: ";
+
     private final CollectionRepository collectionRepository;
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
@@ -42,14 +46,14 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public CollectionResponse findById(Long id) {
         Collection collection = collectionRepository.findById(id)
-                .orElseThrow(() -> new CollectionNotFoundException("Collection not found: " + id));
+                .orElseThrow(() -> new CollectionNotFoundException(COLLECTION_NOT_FOUND + id));
         return collectionMapper.toResponse(collection);
     }
 
     @Override
     public List<CollectionResponse> findByUserId(Long userId) {
         if (!userRepository.existsById(userId)) {
-            throw new UserNotFoundException("User not found: " + userId);
+            throw new UserNotFoundException(USER_NOT_FOUND + userId);
         }
         return collectionRepository.findByOwnerId(userId).stream()
                 .map(collectionMapper::toResponse)
@@ -59,7 +63,7 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public List<GameResponse> findGamesInCollection(Long id) {
         Collection collection = collectionRepository.findById(id)
-                .orElseThrow(() -> new CollectionNotFoundException("Collection not found: " + id));
+                .orElseThrow(() -> new CollectionNotFoundException(COLLECTION_NOT_FOUND + id));
         return collection.getGames().stream()
                 .map(gameMapper::toResponse)
                 .toList();
@@ -79,7 +83,7 @@ public class CollectionServiceImpl implements CollectionService {
     @Transactional
     public CollectionResponse addGameToCollection(Long collectionId, Long gameId) {
         Collection collection = collectionRepository.findById(collectionId)
-                .orElseThrow(() -> new CollectionNotFoundException("Collection not found: " + collectionId));
+                .orElseThrow(() -> new CollectionNotFoundException(COLLECTION_NOT_FOUND + collectionId));
         Game game = resolveGame(gameId);
         collection.getGames().add(game);
         Collection saved = collectionRepository.save(collection);
@@ -90,7 +94,7 @@ public class CollectionServiceImpl implements CollectionService {
     @Transactional
     public CollectionResponse update(Long id, CollectionRequest request) {
         Collection collection = collectionRepository.findById(id)
-                .orElseThrow(() -> new CollectionNotFoundException("Collection not found: " + id));
+                .orElseThrow(() -> new CollectionNotFoundException(COLLECTION_NOT_FOUND + id));
         collection.setName(request.getName());
         collection.setOwner(resolveUser(request.getOwnerId()));
         if (request.getGameIds() != null) {
@@ -104,7 +108,7 @@ public class CollectionServiceImpl implements CollectionService {
     @Transactional
     public CollectionResponse removeGameFromCollection(Long collectionId, Long gameId) {
         Collection collection = collectionRepository.findById(collectionId)
-                .orElseThrow(() -> new CollectionNotFoundException("Collection not found: " + collectionId));
+                .orElseThrow(() -> new CollectionNotFoundException(COLLECTION_NOT_FOUND + collectionId));
         Game game = resolveGame(gameId);
         collection.getGames().remove(game);
         Collection saved = collectionRepository.save(collection);
@@ -115,19 +119,19 @@ public class CollectionServiceImpl implements CollectionService {
     @Transactional
     public void delete(Long id) {
         if (!collectionRepository.existsById(id)) {
-            throw new CollectionNotFoundException("Collection not found: " + id);
+            throw new CollectionNotFoundException(COLLECTION_NOT_FOUND + id);
         }
         collectionRepository.deleteById(id);
     }
 
     private User resolveUser(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + userId));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND + userId));
     }
 
     private Game resolveGame(Long gameId) {
         return gameRepository.findById(gameId)
-                .orElseThrow(() -> new GameNotFoundException("Game not found: " + gameId));
+                .orElseThrow(() -> new GameNotFoundException(GAME_NOT_FOUND + gameId));
     }
 
     private Set<Game> resolveGames(Set<Long> gameIds) {

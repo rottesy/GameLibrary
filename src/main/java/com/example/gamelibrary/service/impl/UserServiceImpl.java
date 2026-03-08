@@ -27,6 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
+    private static final String USER_NOT_FOUND = "User not found: ";
+    private static final String GAME_NOT_FOUND = "Game not found: ";
+
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
     private final ReviewRepository reviewRepository;
@@ -46,14 +49,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse findById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + id));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND + id));
         return userMapper.toResponse(user);
     }
 
     @Override
     public List<GameResponse> findUserGames(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + id));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND + id));
         return user.getLibraryGames().stream()
                 .map(gameMapper::toResponse)
                 .toList();
@@ -62,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<ReviewResponse> findUserReviews(Long id) {
         if (!userRepository.existsById(id)) {
-            throw new UserNotFoundException("User not found: " + id);
+            throw new UserNotFoundException(USER_NOT_FOUND + id);
         }
         return reviewRepository.findByUserId(id).stream()
                 .map(reviewMapper::toResponse)
@@ -72,7 +75,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<CollectionResponse> findUserCollections(Long id) {
         if (!userRepository.existsById(id)) {
-            throw new UserNotFoundException("User not found: " + id);
+            throw new UserNotFoundException(USER_NOT_FOUND + id);
         }
         return collectionRepository.findByOwnerId(id).stream()
                 .map(collectionMapper::toResponse)
@@ -82,7 +85,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<GameResponse> findUserWishlist(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + id));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND + id));
         return user.getWishlistGames().stream()
                 .map(gameMapper::toResponse)
                 .toList();
@@ -92,9 +95,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserResponse addGameToLibrary(Long userId, Long gameId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + userId));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND + userId));
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new GameNotFoundException("Game not found: " + gameId));
+                .orElseThrow(() -> new GameNotFoundException(GAME_NOT_FOUND + gameId));
         user.getLibraryGames().add(game);
         User saved = userRepository.save(user);
         return userMapper.toResponse(saved);
@@ -104,9 +107,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserResponse addGameToWishlist(Long userId, Long gameId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + userId));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND + userId));
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new GameNotFoundException("Game not found: " + gameId));
+                .orElseThrow(() -> new GameNotFoundException(GAME_NOT_FOUND + gameId));
         user.getWishlistGames().add(game);
         User saved = userRepository.save(user);
         return userMapper.toResponse(saved);
@@ -124,7 +127,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserResponse update(Long id, UserRequest request) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + id));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND + id));
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         User saved = userRepository.save(user);
@@ -135,9 +138,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserResponse removeGameFromLibrary(Long userId, Long gameId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + userId));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND + userId));
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new GameNotFoundException("Game not found: " + gameId));
+                .orElseThrow(() -> new GameNotFoundException(GAME_NOT_FOUND + gameId));
         user.getLibraryGames().remove(game);
         User saved = userRepository.save(user);
         return userMapper.toResponse(saved);
@@ -147,9 +150,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserResponse removeGameFromWishlist(Long userId, Long gameId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + userId));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND + userId));
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new GameNotFoundException("Game not found: " + gameId));
+                .orElseThrow(() -> new GameNotFoundException(GAME_NOT_FOUND + gameId));
         user.getWishlistGames().remove(game);
         User saved = userRepository.save(user);
         return userMapper.toResponse(saved);
@@ -159,7 +162,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void delete(Long id) {
         if (!userRepository.existsById(id)) {
-            throw new UserNotFoundException("User not found: " + id);
+            throw new UserNotFoundException(USER_NOT_FOUND + id);
         }
         userRepository.deleteById(id);
     }
