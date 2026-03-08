@@ -43,7 +43,7 @@ public class GenreServiceImpl implements GenreService {
         if (!genreRepository.existsById(id)) {
             throw new GenreNotFoundException("Genre not found: " + id);
         }
-        return gameRepository.findByGenres_Id(id).stream()
+        return gameRepository.findByGenresId(id).stream()
                 .map(gameMapper::toResponse)
                 .toList();
     }

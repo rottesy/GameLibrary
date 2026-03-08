@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
         if (!userRepository.existsById(id)) {
             throw new UserNotFoundException("User not found: " + id);
         }
-        return reviewRepository.findByUser_Id(id).stream()
+        return reviewRepository.findByUserId(id).stream()
                 .map(reviewMapper::toResponse)
                 .toList();
     }
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
         if (!userRepository.existsById(id)) {
             throw new UserNotFoundException("User not found: " + id);
         }
-        return collectionRepository.findByOwner_Id(id).stream()
+        return collectionRepository.findByOwnerId(id).stream()
                 .map(collectionMapper::toResponse)
                 .toList();
     }

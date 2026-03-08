@@ -51,7 +51,7 @@ public class CollectionServiceImpl implements CollectionService {
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException("User not found: " + userId);
         }
-        return collectionRepository.findByOwner_Id(userId).stream()
+        return collectionRepository.findByOwnerId(userId).stream()
                 .map(collectionMapper::toResponse)
                 .toList();
     }

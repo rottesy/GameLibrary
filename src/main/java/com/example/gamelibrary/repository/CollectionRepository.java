@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CollectionRepository extends JpaRepository<Collection, Long> {
-    List<Collection> findByOwner_Id(Long ownerId);
+    List<Collection> findByOwnerId(Long ownerId);
 }

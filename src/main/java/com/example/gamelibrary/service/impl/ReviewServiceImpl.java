@@ -47,7 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
         if (!gameRepository.existsById(gameId)) {
             throw new GameNotFoundException("Game not found: " + gameId);
         }
-        return reviewRepository.findByGame_Id(gameId).stream()
+        return reviewRepository.findByGameId(gameId).stream()
                 .map(reviewMapper::toResponse)
                 .toList();
     }
@@ -57,7 +57,7 @@ public class ReviewServiceImpl implements ReviewService {
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException("User not found: " + userId);
         }
-        return reviewRepository.findByUser_Id(userId).stream()
+        return reviewRepository.findByUserId(userId).stream()
                 .map(reviewMapper::toResponse)
                 .toList();
     }

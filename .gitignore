@@ -48,3 +48,6 @@ Thumbs.db
 # Build outputs
 target/
 build/
+
+# Local scripts
+scripts/

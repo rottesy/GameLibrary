@@ -43,7 +43,7 @@ public class DeveloperServiceImpl implements DeveloperService {
         if (!developerRepository.existsById(id)) {
             throw new DeveloperNotFoundException("Developer not found: " + id);
         }
-        return gameRepository.findByDeveloper_Id(id).stream()
+        return gameRepository.findByDeveloperId(id).stream()
                 .map(gameMapper::toResponse)
                 .toList();
     }

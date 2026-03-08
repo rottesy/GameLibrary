@@ -56,7 +56,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameResponse> findByGenre(String genre) {
-        return gameRepository.findByGenres_NameIgnoreCase(genre).stream()
+        return gameRepository.findByGenresNameIgnoreCase(genre).stream()
                 .map(gameMapper::toResponse)
                 .toList();
     }
@@ -70,7 +70,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameResponse> findByDeveloper(String developer) {
-        return gameRepository.findByDeveloper_NameContainingIgnoreCase(developer).stream()
+        return gameRepository.findByDeveloperNameContainingIgnoreCase(developer).stream()
                 .map(gameMapper::toResponse)
                 .toList();
     }
@@ -102,7 +102,8 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameResponse> searchByKeyword(String keyword) {
-        return gameRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword).stream()
+        return gameRepository
+                .findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword).stream()
                 .map(gameMapper::toResponse)
                 .toList();
     }

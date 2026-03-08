@@ -10,15 +10,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
-    List<Game> findByGenres_NameIgnoreCase(String name);
+    List<Game> findByGenresNameIgnoreCase(String name);
 
-    List<Game> findByGenres_Id(Long genreId);
+    List<Game> findByGenresId(Long genreId);
 
     List<Game> findByRatingGreaterThanEqual(Integer rating);
 
-    List<Game> findByDeveloper_NameContainingIgnoreCase(String developer);
+    List<Game> findByDeveloperNameContainingIgnoreCase(String developer);
 
-    List<Game> findByDeveloper_Id(Long developerId);
+    List<Game> findByDeveloperId(Long developerId);
 
     List<Game> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
 
