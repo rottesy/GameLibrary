@@ -18,5 +18,7 @@ public interface ReviewMapper {
     @Mapping(target = "user", ignore = true)
     Review fromRequest(ReviewRequest request);
 
+    @Mapping(source = "game.id", target = "gameId")
+    @Mapping(source = "user.id", target = "userId")
     ReviewRequest toRequest(Review review);
 }

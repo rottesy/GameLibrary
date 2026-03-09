@@ -26,6 +26,8 @@ public interface GameMapper {
     @Mapping(target = "collections", ignore = true)
     Game fromRequest(GameRequest request);
 
+    @Mapping(source = "developer.id", target = "developerId")
+    @Mapping(source = "genres", target = "genreIds")
     GameRequest toRequest(Game game);
 
     default Set<Long> mapGenresToIds(Set<Genre> genres) {

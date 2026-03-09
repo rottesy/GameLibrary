@@ -21,6 +21,8 @@ public interface CollectionMapper {
     @Mapping(target = "games", ignore = true)
     Collection fromRequest(CollectionRequest request);
 
+    @Mapping(source = "owner.id", target = "ownerId")
+    @Mapping(source = "games", target = "gameIds")
     CollectionRequest toRequest(Collection collection);
 
     default Set<Long> mapGamesToIds(Set<Game> games) {

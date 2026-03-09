@@ -35,12 +35,10 @@ public class Collection {
     @Column(nullable = false, length = 150)
     private String name;
 
-    // LAZY to avoid loading owner data when not needed.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    // LAZY to avoid loading collection games when not needed.
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "collection_games",

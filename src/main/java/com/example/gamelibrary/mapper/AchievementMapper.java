@@ -15,5 +15,6 @@ public interface AchievementMapper {
     @Mapping(target = "game", ignore = true)
     Achievement fromRequest(AchievementRequest request);
 
+    @Mapping(source = "game.id", target = "gameId")
     AchievementRequest toRequest(Achievement achievement);
 }
