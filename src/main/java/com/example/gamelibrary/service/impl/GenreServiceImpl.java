@@ -79,6 +79,7 @@ public class GenreServiceImpl implements GenreService {
         if (!genreRepository.existsById(id)) {
             throw new GenreNotFoundException("Genre not found: " + id);
         }
+        gameRepository.deleteGameGenresByGenreId(id);
         genreRepository.deleteById(id);
     }
 }

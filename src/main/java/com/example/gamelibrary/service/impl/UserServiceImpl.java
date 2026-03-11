@@ -18,7 +18,9 @@ import com.example.gamelibrary.repository.GameRepository;
 import com.example.gamelibrary.repository.ReviewRepository;
 import com.example.gamelibrary.repository.UserRepository;
 import com.example.gamelibrary.service.UserService;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -119,6 +121,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserResponse create(UserRequest request) {
         User user = userMapper.fromRequest(request);
+        user.setLibraryGames(resolveGames(request.getLibraryGameIds()));
+        user.setWishlistGames(resolveGames(request.getWishlistGameIds()));
         User saved = userRepository.save(user);
         return userMapper.toResponse(saved);
     }
@@ -165,5 +169,21 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException(USER_NOT_FOUND + id);
         }
         userRepository.deleteById(id);
+    }
+
+    private Game resolveGame(Long gameId) {
+        return gameRepository.findById(gameId)
+                .orElseThrow(() -> new GameNotFoundException(GAME_NOT_FOUND + gameId));
+    }
+
+    private Set<Game> resolveGames(Set<Long> gameIds) {
+        if (gameIds == null || gameIds.isEmpty()) {
+            return new HashSet<>();
+        }
+        Set<Game> games = new HashSet<>();
+        for (Long gameId : gameIds) {
+            games.add(resolveGame(gameId));
+        }
+        return games;
     }
 }

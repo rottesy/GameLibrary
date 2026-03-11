@@ -174,6 +174,10 @@ public class GameServiceImpl implements GameService {
         if (!gameRepository.existsById(id)) {
             throw new GameNotFoundException("Game not found: " + id);
         }
+        gameRepository.deleteUserGamesByGameId(id);
+        gameRepository.deleteUserWishlistByGameId(id);
+        gameRepository.deleteCollectionGamesByGameId(id);
+        gameRepository.deleteGameGenresByGameId(id);
         gameRepository.deleteById(id);
     }
 

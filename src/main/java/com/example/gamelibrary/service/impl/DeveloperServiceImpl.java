@@ -79,6 +79,7 @@ public class DeveloperServiceImpl implements DeveloperService {
         if (!developerRepository.existsById(id)) {
             throw new DeveloperNotFoundException("Developer not found: " + id);
         }
+        gameRepository.clearDeveloperFromGames(id);
         developerRepository.deleteById(id);
     }
 }
