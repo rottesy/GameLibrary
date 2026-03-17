@@ -52,7 +52,7 @@ build/
 # Local scripts
 scripts/
 
-docs/
+#docs/
 
 postman/
 test/
