@@ -52,6 +52,9 @@ SQL‑логи включены в `src/main/resources/application.properties`.
 Полная коллекция запросов:
 `docs/postman/full-demo.postman_collection.json`
 
+Коллекция для пункта с `JPQL` / `native query` / `Pageable` / кешем:
+`postman/GameLibrary-Search-And-Cache.postman_collection.json`
+
 ## Документация для защиты
 
 Подробные объяснения:
@@ -59,3 +62,4 @@ SQL‑логи включены в `src/main/resources/application.properties`.
 - `docs/cascade-fetch-explanation.md`
 - `docs/n-plus-one-explanation.md`
 - `docs/transactions-explanation.md`
+- `docs/search-cache-explanation.md`

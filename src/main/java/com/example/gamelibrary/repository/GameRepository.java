@@ -30,6 +30,70 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     Page<Game> findAllByOrderByRatingDesc(Pageable pageable);
 
+    @Query(
+            value = """
+                    select distinct g
+                    from Game g
+                    join g.achievements a
+                    where (:achievementName = ''
+                        or lower(a.name) like lower(concat('%', :achievementName, '%')))
+                        and (:achievementDescription = ''
+                        or lower(coalesce(a.description, ''))
+                        like lower(concat('%', :achievementDescription, '%')))
+                        and (:minRating is null or g.rating >= :minRating)
+            """,
+            countQuery = """
+                    select count(distinct g.id)
+                    from Game g
+                    join g.achievements a
+                    where (:achievementName = ''
+                        or lower(a.name) like lower(concat('%', :achievementName, '%')))
+                        and (:achievementDescription = ''
+                        or lower(coalesce(a.description, ''))
+                        like lower(concat('%', :achievementDescription, '%')))
+                        and (:minRating is null or g.rating >= :minRating)
+            """
+    )
+    Page<Game> findByAchievementsWithJpql(
+            @Param("achievementName") String achievementName,
+            @Param("achievementDescription") String achievementDescription,
+            @Param("minRating") Integer minRating,
+            Pageable pageable
+    );
+
+    @Query(
+            value = """
+                    select distinct g.*
+                    from games g
+                    join achievements a on a.game_id = g.id
+                    where (:achievementName = ''
+                        or lower(a.name) like lower(concat('%', :achievementName, '%')))
+                        and (:achievementDescription = ''
+                        or lower(coalesce(a.description, ''))
+                        like lower(concat('%', :achievementDescription, '%')))
+                        and (:minRating is null or g.rating >= :minRating)
+                    order by g.id
+            """,
+            countQuery = """
+                    select count(distinct g.id)
+                    from games g
+                    join achievements a on a.game_id = g.id
+                    where (:achievementName = ''
+                        or lower(a.name) like lower(concat('%', :achievementName, '%')))
+                        and (:achievementDescription = ''
+                        or lower(coalesce(a.description, ''))
+                        like lower(concat('%', :achievementDescription, '%')))
+                        and (:minRating is null or g.rating >= :minRating)
+            """,
+            nativeQuery = true
+    )
+    Page<Game> findByAchievementsWithNative(
+            @Param("achievementName") String achievementName,
+            @Param("achievementDescription") String achievementDescription,
+            @Param("minRating") Integer minRating,
+            Pageable pageable
+    );
+
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("update Game g set g.developer = null where g.developer.id = :developerId")
     int clearDeveloperFromGames(@Param("developerId") Long developerId);

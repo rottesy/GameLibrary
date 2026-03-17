@@ -53,3 +53,6 @@ build/
 scripts/
 
 docs/
+
+postman/
+test/

@@ -1,5 +1,7 @@
 package com.example.gamelibrary.service.impl;
 
+import com.example.gamelibrary.cache.CacheKey;
+import com.example.gamelibrary.cache.CacheManager;
 import com.example.gamelibrary.exception.DeveloperNotFoundException;
 import com.example.gamelibrary.exception.GameNotFoundException;
 import com.example.gamelibrary.exception.GenreNotFoundException;
@@ -33,6 +35,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -48,6 +52,7 @@ public class GameServiceImpl implements GameService {
     private final ReviewRepository reviewRepository;
     private final AchievementRepository achievementRepository;
     private final UserRepository userRepository;
+    private final CacheManager cacheManager;
     private final GameMapper gameMapper;
     private final ReviewMapper reviewMapper;
     private final AchievementMapper achievementMapper;
@@ -125,6 +130,54 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public Page<GameResponse> findByAchievementsWithJpql(
+            String achievementName,
+            String achievementDescription,
+            Integer minRating,
+            Pageable pageable
+    ) {
+        String normalizedAchievementName = normalizeFilter(achievementName);
+        String normalizedAchievementDescription = normalizeFilter(achievementDescription);
+        CacheKey cacheKey = buildSearchCacheKey(
+                "findByAchievementsWithJpql",
+                normalizedAchievementName,
+                normalizedAchievementDescription,
+                minRating,
+                pageable
+        );
+        return cacheManager.computeIfAbsent(cacheKey, () -> gameRepository.findByAchievementsWithJpql(
+                normalizedAchievementName,
+                normalizedAchievementDescription,
+                minRating,
+                pageable
+        ).map(gameMapper::toResponse));
+    }
+
+    @Override
+    public Page<GameResponse> findByAchievementsWithNative(
+            String achievementName,
+            String achievementDescription,
+            Integer minRating,
+            Pageable pageable
+    ) {
+        String normalizedAchievementName = normalizeFilter(achievementName);
+        String normalizedAchievementDescription = normalizeFilter(achievementDescription);
+        CacheKey cacheKey = buildSearchCacheKey(
+                "findByAchievementsWithNative",
+                normalizedAchievementName,
+                normalizedAchievementDescription,
+                minRating,
+                pageable
+        );
+        return cacheManager.computeIfAbsent(cacheKey, () -> gameRepository.findByAchievementsWithNative(
+                normalizedAchievementName,
+                normalizedAchievementDescription,
+                minRating,
+                pageable
+        ).map(gameMapper::toResponse));
+    }
+
+    @Override
     public GameResponse findById(Long id) {
         Game game = gameRepository.findById(id)
                 .orElseThrow(() -> new GameNotFoundException("Game not found: " + id));
@@ -138,6 +191,7 @@ public class GameServiceImpl implements GameService {
         game.setDeveloper(resolveDeveloper(request.getDeveloperId()));
         game.setGenres(resolveGenres(request.getGenreIds()));
         Game saved = gameRepository.save(game);
+        invalidateGameSearchCache();
         return gameMapper.toResponse(saved);
     }
 
@@ -165,6 +219,7 @@ public class GameServiceImpl implements GameService {
         game.setDeveloper(resolveDeveloper(request.getDeveloperId()));
         game.setGenres(resolveGenres(request.getGenreIds()));
         Game saved = gameRepository.save(game);
+        invalidateGameSearchCache();
         return gameMapper.toResponse(saved);
     }
 
@@ -179,6 +234,7 @@ public class GameServiceImpl implements GameService {
         gameRepository.deleteCollectionGamesByGameId(id);
         gameRepository.deleteGameGenresByGameId(id);
         gameRepository.deleteById(id);
+        invalidateGameSearchCache();
     }
 
     private Developer resolveDeveloper(Long developerId) {
@@ -209,6 +265,7 @@ public class GameServiceImpl implements GameService {
         game.setDeveloper(resolveDeveloper(request.getGame().getDeveloperId()));
         game.setGenres(resolveGenres(request.getGame().getGenreIds()));
         Game savedGame = gameRepository.save(game);
+        invalidateGameSearchCache();
 
         Review review = reviewMapper.fromRequest(request.getReview());
         review.setGame(savedGame);
@@ -225,6 +282,39 @@ public class GameServiceImpl implements GameService {
         achievementRepository.save(achievement);
 
         return gameMapper.toResponse(savedGame);
+    }
+
+    private CacheKey buildSearchCacheKey(
+            String methodName,
+            String achievementName,
+            String achievementDescription,
+            Integer minRating,
+            Pageable pageable
+    ) {
+        int pageNumber = pageable.isPaged() ? pageable.getPageNumber() : -1;
+        int pageSize = pageable.isPaged() ? pageable.getPageSize() : -1;
+        return new CacheKey(
+                Game.class,
+                methodName,
+                achievementName,
+                achievementDescription,
+                minRating,
+                pageNumber,
+                pageSize,
+                pageable.getSort().toString()
+        );
+    }
+
+    private String normalizeFilter(String value) {
+        if (value == null) {
+            return "";
+        }
+        String normalized = value.trim();
+        return normalized.isEmpty() ? "" : normalized;
+    }
+
+    private void invalidateGameSearchCache() {
+        cacheManager.invalidate(Game.class);
     }
 
     private boolean shouldFailComposite(GameCompositeRequest request) {

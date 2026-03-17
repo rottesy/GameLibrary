@@ -6,6 +6,8 @@ import com.example.gamelibrary.model.dto.response.GameResponse;
 import com.example.gamelibrary.model.dto.response.GameWithAchievementsResponse;
 import com.example.gamelibrary.model.dto.response.GameWithReviewsResponse;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface GameService {
     List<GameResponse> findAll();
@@ -27,6 +29,20 @@ public interface GameService {
     List<GameResponse> findNewReleases(Integer days);
 
     List<GameResponse> searchByKeyword(String keyword);
+
+    Page<GameResponse> findByAchievementsWithJpql(
+            String achievementName,
+            String achievementDescription,
+            Integer minRating,
+            Pageable pageable
+    );
+
+    Page<GameResponse> findByAchievementsWithNative(
+            String achievementName,
+            String achievementDescription,
+            Integer minRating,
+            Pageable pageable
+    );
 
     GameResponse findById(Long id);
 
