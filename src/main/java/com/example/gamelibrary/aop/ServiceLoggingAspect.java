@@ -15,6 +15,7 @@ import org.springframework.util.StopWatch;
 public class ServiceLoggingAspect {
     private static final long SLOW_THRESHOLD_MS = 500L;
     private static final long VERY_SLOW_THRESHOLD_MS = 1_000L;
+    private static final String METHOD_COMPLETED_IN_MS = "Method {} completed in {} ms";
 
     @Pointcut("within(@org.springframework.stereotype.Service *)")
     public void serviceMethods() {
@@ -47,11 +48,11 @@ public class ServiceLoggingAspect {
 
     private void logExecutionDuration(String methodName, long executionTimeMs) {
         if (executionTimeMs > VERY_SLOW_THRESHOLD_MS) {
-            log.warn("Method {} completed in {} ms", methodName, executionTimeMs);
+            log.warn(METHOD_COMPLETED_IN_MS, methodName, executionTimeMs);
         } else if (executionTimeMs > SLOW_THRESHOLD_MS) {
-            log.info("Method {} completed in {} ms", methodName, executionTimeMs);
+            log.info(METHOD_COMPLETED_IN_MS, methodName, executionTimeMs);
         } else {
-            log.debug("Method {} completed in {} ms", methodName, executionTimeMs);
+            log.debug(METHOD_COMPLETED_IN_MS, methodName, executionTimeMs);
         }
     }
 }

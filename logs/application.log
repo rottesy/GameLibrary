@@ -1,222 +1,38 @@
-2026-03-19 21:05:21.443 [main] INFO  c.e.g.GamelibraryApplication - Starting GamelibraryApplication using Java 21.0.10 with PID 43620 (/home/rottesy/Programming/java/GameLibrary/target/classes started by rottesy in /home/rottesy/Programming/java/GameLibrary)
-2026-03-19 21:05:21.444 [main] DEBUG c.e.g.GamelibraryApplication - Running with Spring Boot v3.5.10, Spring v6.2.15
-2026-03-19 21:05:21.445 [main] INFO  c.e.g.GamelibraryApplication - No active profile set, falling back to 1 default profile: "default"
-2026-03-19 21:05:21.811 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-03-19 21:05:21.853 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 38 ms. Found 7 JPA repository interfaces.
-2026-03-19 21:05:22.151 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-03-19 21:05:22.157 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-03-19 21:05:22.158 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-03-19 21:05:22.159 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.50]
-2026-03-19 21:05:22.182 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-03-19 21:05:22.182 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 719 ms
-2026-03-19 21:05:22.422 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-03-19 21:05:22.435 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-03-19 21:05:22.506 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4449b273
-2026-03-19 21:05:22.507 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-03-19 21:05:23.099 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-03-19 21:05:23.274 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-03-19 21:05:24.209 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-03-19 21:05:24.216 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-03-19 21:05:24.221 [main] INFO  c.e.g.GamelibraryApplication - Started GamelibraryApplication in 3.021 seconds (process running for 3.152)
-2026-03-19 21:05:58.734 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-03-19 21:05:59.237 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-03-19 21:05:59.239 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-03-19 21:05:59.241 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-03-19 21:05:59.242 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2026-03-19 21:34:17.723 [main] INFO  c.e.g.GamelibraryApplication - Starting GamelibraryApplication using Java 21.0.10 with PID 57744 (/home/rottesy/Programming/java/GameLibrary/target/classes started by rottesy in /home/rottesy/Programming/java/GameLibrary)
-2026-03-19 21:34:17.724 [main] DEBUG c.e.g.GamelibraryApplication - Running with Spring Boot v3.5.10, Spring v6.2.15
-2026-03-19 21:34:17.724 [main] INFO  c.e.g.GamelibraryApplication - No active profile set, falling back to 1 default profile: "default"
-2026-03-19 21:34:18.131 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-03-19 21:34:18.177 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 40 ms. Found 7 JPA repository interfaces.
-2026-03-19 21:34:18.509 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-03-19 21:34:18.516 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-03-19 21:34:18.518 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-03-19 21:34:18.518 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.50]
-2026-03-19 21:34:18.542 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-03-19 21:34:18.542 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 795 ms
-2026-03-19 21:34:18.799 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-03-19 21:34:18.813 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-03-19 21:34:18.897 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@93f15f6
-2026-03-19 21:34:18.898 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-03-19 21:34:19.538 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-03-19 21:34:19.725 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-03-19 21:34:20.730 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-03-19 21:34:20.738 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-03-19 21:34:20.743 [main] INFO  c.e.g.GamelibraryApplication - Started GamelibraryApplication in 3.286 seconds (process running for 3.433)
-2026-03-19 21:36:24.251 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-03-19 21:36:24.251 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-03-19 21:36:24.252 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-2026-03-19 21:36:24.266 [http-nio-8080-exec-1] WARN  c.e.g.e.GlobalExceptionHandler - Endpoint not found for /swagger-ui.html%60: No static resource swagger-ui.html%60.
-2026-03-19 21:36:24.347 [http-nio-8080-exec-2] WARN  c.e.g.e.GlobalExceptionHandler - Endpoint not found for /favicon.ico: No static resource favicon.ico.
-2026-03-19 21:36:28.526 [http-nio-8080-exec-2] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 387 ms
-2026-03-19 21:38:28.971 [http-nio-8080-exec-10] DEBUG c.e.g.aop.ServiceLoggingAspect - Executing GameServiceImpl.findByAchievementsWithJpql with args [Master Explorer, cache invalidation, 8]
-2026-03-19 21:38:28.972 [http-nio-8080-exec-10] INFO  c.e.gamelibrary.cache.CacheManager - [CACHE MISS] key=Game.findByAchievementsWithJpql[Master Explorer, cache invalidation, 8], size=0
-2026-03-19 21:38:29.040 [http-nio-8080-exec-10] INFO  c.e.gamelibrary.cache.CacheManager - [CACHE PUT] key=Game.findByAchievementsWithJpql[Master Explorer, cache invalidation, 8], size=1
-2026-03-19 21:38:29.040 [http-nio-8080-exec-10] DEBUG c.e.g.aop.ServiceLoggingAspect - Method GameServiceImpl.findByAchievementsWithJpql completed in 68 ms
-2026-03-19 21:39:03.836 [http-nio-8080-exec-1] DEBUG c.e.g.aop.ServiceLoggingAspect - Executing DeveloperServiceImpl.create with args [com.example.gamelibrary.model.dto.request.DeveloperRequest@15c95d00]
-2026-03-19 21:39:03.857 [http-nio-8080-exec-1] DEBUG c.e.g.aop.ServiceLoggingAspect - Method DeveloperServiceImpl.create completed in 20 ms
-2026-03-19 21:39:06.812 [http-nio-8080-exec-2] DEBUG c.e.g.aop.ServiceLoggingAspect - Executing UserServiceImpl.create with args [com.example.gamelibrary.model.dto.request.UserRequest@2936e2be]
-2026-03-19 21:39:06.815 [http-nio-8080-exec-2] DEBUG c.e.g.aop.ServiceLoggingAspect - Method UserServiceImpl.create completed in 3 ms
-2026-03-19 21:39:09.446 [http-nio-8080-exec-3] DEBUG c.e.g.aop.ServiceLoggingAspect - Executing GameServiceImpl.createGameWithReviewAndAchievementTx with args [com.example.gamelibrary.model.dto.request.GameCompositeRequest@6be92eaf]
-2026-03-19 21:39:09.455 [http-nio-8080-exec-3] INFO  c.e.gamelibrary.cache.CacheManager - [CACHE INVALIDATE] entities=[Game], removedKeys=1, size=0
-2026-03-19 21:39:09.463 [http-nio-8080-exec-3] DEBUG c.e.g.aop.ServiceLoggingAspect - Method GameServiceImpl.createGameWithReviewAndAchievementTx completed in 16 ms
-2026-03-19 21:39:11.862 [http-nio-8080-exec-8] DEBUG c.e.g.aop.ServiceLoggingAspect - Executing GameServiceImpl.createGameWithReviewAndAchievementTx with args [com.example.gamelibrary.model.dto.request.GameCompositeRequest@71109d04]
-2026-03-19 21:39:11.865 [http-nio-8080-exec-8] INFO  c.e.gamelibrary.cache.CacheManager - [CACHE INVALIDATE] entities=[Game], removedKeys=0, size=0
-2026-03-19 21:39:11.868 [http-nio-8080-exec-8] DEBUG c.e.g.aop.ServiceLoggingAspect - Method GameServiceImpl.createGameWithReviewAndAchievementTx completed in 5 ms
-2026-03-19 21:39:18.580 [http-nio-8080-exec-6] DEBUG c.e.g.aop.ServiceLoggingAspect - Executing GameServiceImpl.findByAchievementsWithJpql with args [Master Explorer, cache invalidation, 8]
-2026-03-19 21:39:18.580 [http-nio-8080-exec-6] INFO  c.e.gamelibrary.cache.CacheManager - [CACHE MISS] key=Game.findByAchievementsWithJpql[Master Explorer, cache invalidation, 8], size=0
-2026-03-19 21:39:18.583 [http-nio-8080-exec-6] INFO  c.e.gamelibrary.cache.CacheManager - [CACHE PUT] key=Game.findByAchievementsWithJpql[Master Explorer, cache invalidation, 8], size=1
-2026-03-19 21:39:18.584 [http-nio-8080-exec-6] DEBUG c.e.g.aop.ServiceLoggingAspect - Method GameServiceImpl.findByAchievementsWithJpql completed in 3 ms
-2026-03-19 21:40:00.961 [http-nio-8080-exec-5] DEBUG c.e.g.aop.ServiceLoggingAspect - Executing UserServiceImpl.findAll with args [Page request [number: 0, size 3, sort: id: ASC]]
-2026-03-19 21:40:00.970 [http-nio-8080-exec-5] DEBUG c.e.g.aop.ServiceLoggingAspect - Method UserServiceImpl.findAll completed in 8 ms
-2026-03-19 21:40:43.972 [http-nio-8080-exec-4] DEBUG c.e.g.aop.ServiceLoggingAspect - Executing GameServiceImpl.delete with args [90]
-2026-03-19 21:40:43.977 [http-nio-8080-exec-4] ERROR c.e.g.aop.ServiceLoggingAspect - Method GameServiceImpl.delete failed after 4 ms
-com.example.gamelibrary.exception.GameNotFoundException: Game not found: 90
-	at com.example.gamelibrary.service.impl.GameServiceImpl.delete(GameServiceImpl.java:230)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
-	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
-	at com.example.gamelibrary.aop.ServiceLoggingAspect.logExecutionTime(ServiceLoggingAspect.java:34)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:649)
-	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631)
-	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
-	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
-	at com.example.gamelibrary.service.impl.GameServiceImpl$$SpringCGLIB$$0.delete(<generated>)
-	at com.example.gamelibrary.controller.GameController.delete(GameController.java:208)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
-	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:172)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
-	at com.example.gamelibrary.controller.GameController$$SpringCGLIB$$0.delete(<generated>)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
-	at org.springframework.web.servlet.FrameworkServlet.doDelete(FrameworkServlet.java:936)
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:596)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-03-19 21:40:43.980 [http-nio-8080-exec-4] WARN  c.e.g.e.GlobalExceptionHandler - Runtime exception for /api/games/90: Game not found: 90
-2026-03-19 21:41:38.867 [http-nio-8080-exec-9] WARN  c.e.g.e.GlobalExceptionHandler - Endpoint not found for /api/game/90: No static resource api/game/90.
-2026-03-19 21:42:46.022 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-03-19 21:42:46.525 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-03-19 21:42:46.527 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-03-19 21:42:46.529 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-03-19 21:42:46.530 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2026-03-19 21:44:40.426 [main] INFO  c.e.g.GamelibraryApplication - Starting GamelibraryApplication using Java 21.0.10 with PID 64570 (/home/rottesy/Programming/java/GameLibrary/target/classes started by rottesy in /home/rottesy/Programming/java/GameLibrary)
-2026-03-19 21:44:40.427 [main] DEBUG c.e.g.GamelibraryApplication - Running with Spring Boot v3.5.10, Spring v6.2.15
-2026-03-19 21:44:40.427 [main] INFO  c.e.g.GamelibraryApplication - No active profile set, falling back to 1 default profile: "default"
-2026-03-19 21:44:40.788 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-03-19 21:44:40.831 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 38 ms. Found 7 JPA repository interfaces.
-2026-03-19 21:44:41.118 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-03-19 21:44:41.124 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-03-19 21:44:41.125 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-03-19 21:44:41.125 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.50]
-2026-03-19 21:44:41.147 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-03-19 21:44:41.148 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 702 ms
-2026-03-19 21:44:41.381 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-03-19 21:44:41.394 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-03-19 21:44:41.466 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4bc21e34
-2026-03-19 21:44:41.467 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-03-19 21:44:42.031 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-03-19 21:44:42.194 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-03-19 21:44:43.104 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-03-19 21:44:43.111 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-03-19 21:44:43.116 [main] INFO  c.e.g.GamelibraryApplication - Started GamelibraryApplication in 2.947 seconds (process running for 3.092)
-2026-03-19 21:45:11.534 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-03-19 21:45:11.534 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-03-19 21:45:11.535 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-2026-03-19 21:45:11.616 [http-nio-8080-exec-1] DEBUG c.e.g.aop.ServiceLoggingAspect - Executing DeveloperServiceImpl.create with args [com.example.gamelibrary.model.dto.request.DeveloperRequest@5f08c4d6]
-2026-03-19 21:45:11.634 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+2026-03-20 00:03:04.934 [main] INFO  c.e.g.GamelibraryApplication - Starting GamelibraryApplication using Java 21.0.10 with PID 80020 (/home/rottesy/Programming/java/GameLibrary/target/classes started by rottesy in /home/rottesy/Programming/java/GameLibrary)
+2026-03-20 00:03:04.940 [main] DEBUG c.e.g.GamelibraryApplication - Running with Spring Boot v3.5.10, Spring v6.2.15
+2026-03-20 00:03:04.940 [main] INFO  c.e.g.GamelibraryApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-20 00:03:05.305 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-20 00:03:05.346 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 37 ms. Found 7 JPA repository interfaces.
+2026-03-20 00:03:05.650 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-03-20 00:03:05.656 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-03-20 00:03:05.657 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-20 00:03:05.657 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.50]
+2026-03-20 00:03:05.679 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-03-20 00:03:05.679 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 719 ms
+2026-03-20 00:03:05.924 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-20 00:03:05.937 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-03-20 00:03:06.011 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@11309dd4
+2026-03-20 00:03:06.012 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-03-20 00:03:06.588 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-20 00:03:06.753 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-20 00:03:07.651 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-03-20 00:03:07.658 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-03-20 00:03:07.663 [main] INFO  c.e.g.GamelibraryApplication - Started GamelibraryApplication in 2.975 seconds (process running for 3.114)
+2026-03-20 00:03:31.740 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-20 00:03:31.740 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-03-20 00:03:31.741 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-03-20 00:03:31.838 [http-nio-8080-exec-2] WARN  c.e.g.e.GlobalExceptionHandler - Validation failed for /api/users: {username=must not be blank}
+2026-03-20 00:03:40.094 [http-nio-8080-exec-4] DEBUG c.e.g.aop.ServiceLoggingAspect - Executing UserServiceImpl.create with args [com.example.gamelibrary.model.dto.request.UserRequest@4b2f734d]
+2026-03-20 00:03:40.120 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
     insert 
     into
-        developers
-        (name) 
+        users
+        (email, username) 
     values
-        (?)
-2026-03-19 21:45:11.647 [http-nio-8080-exec-1] DEBUG c.e.g.aop.ServiceLoggingAspect - Method DeveloperServiceImpl.create completed in 31 ms
-2026-03-19 23:46:27.277 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-03-19 23:46:27.279 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-03-19 23:46:27.281 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-03-19 23:46:27.282 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-03-19 23:46:27.284 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2026-03-19 23:46:30.430 [main] INFO  c.e.g.GamelibraryApplication - Starting GamelibraryApplication using Java 21.0.10 with PID 72043 (/home/rottesy/Programming/java/GameLibrary/target/classes started by rottesy in /home/rottesy/Programming/java/GameLibrary)
-2026-03-19 23:46:30.431 [main] DEBUG c.e.g.GamelibraryApplication - Running with Spring Boot v3.5.10, Spring v6.2.15
-2026-03-19 23:46:30.431 [main] INFO  c.e.g.GamelibraryApplication - No active profile set, falling back to 1 default profile: "default"
-2026-03-19 23:46:30.798 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-03-19 23:46:30.843 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 40 ms. Found 7 JPA repository interfaces.
-2026-03-19 23:46:31.157 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-03-19 23:46:31.163 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-03-19 23:46:31.164 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-03-19 23:46:31.164 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.50]
-2026-03-19 23:46:31.186 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-03-19 23:46:31.186 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 732 ms
-2026-03-19 23:46:31.422 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-03-19 23:46:31.434 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-03-19 23:46:31.505 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7544260a
-2026-03-19 23:46:31.506 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-03-19 23:46:32.088 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-03-19 23:46:32.252 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-03-19 23:46:33.150 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-03-19 23:46:33.156 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-03-19 23:46:33.162 [main] INFO  c.e.g.GamelibraryApplication - Started GamelibraryApplication in 2.976 seconds (process running for 3.113)
-2026-03-19 23:46:34.055 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-03-19 23:46:34.057 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-03-19 23:46:34.059 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-03-19 23:46:34.061 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-03-19 23:46:34.063 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+        (?, ?)
+2026-03-20 00:03:40.136 [http-nio-8080-exec-4] DEBUG c.e.g.aop.ServiceLoggingAspect - Method UserServiceImpl.create completed in 41 ms
+2026-03-20 00:05:08.385 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-20 00:05:08.888 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-03-20 00:05:08.891 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-20 00:05:08.893 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-03-20 00:05:08.894 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
