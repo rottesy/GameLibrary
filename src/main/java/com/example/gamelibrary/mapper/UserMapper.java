@@ -2,6 +2,7 @@ package com.example.gamelibrary.mapper;
 
 import com.example.gamelibrary.model.dto.request.UserRequest;
 import com.example.gamelibrary.model.dto.response.UserResponse;
+import com.example.gamelibrary.model.dto.response.UserSummaryResponse;
 import com.example.gamelibrary.model.entity.Game;
 import com.example.gamelibrary.model.entity.User;
 import java.util.Collections;
@@ -15,6 +16,8 @@ public interface UserMapper {
     @Mapping(source = "libraryGames", target = "libraryGameIds")
     @Mapping(source = "wishlistGames", target = "wishlistGameIds")
     UserResponse toResponse(User user);
+
+    UserSummaryResponse toSummaryResponse(User user);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "libraryGames", ignore = true)

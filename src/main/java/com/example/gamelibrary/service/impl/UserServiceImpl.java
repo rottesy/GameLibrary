@@ -11,6 +11,7 @@ import com.example.gamelibrary.model.dto.response.CollectionResponse;
 import com.example.gamelibrary.model.dto.response.GameResponse;
 import com.example.gamelibrary.model.dto.response.ReviewResponse;
 import com.example.gamelibrary.model.dto.response.UserResponse;
+import com.example.gamelibrary.model.dto.response.UserSummaryResponse;
 import com.example.gamelibrary.model.entity.Game;
 import com.example.gamelibrary.model.entity.User;
 import com.example.gamelibrary.repository.CollectionRepository;
@@ -22,6 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,10 +45,9 @@ public class UserServiceImpl implements UserService {
     private final CollectionMapper collectionMapper;
 
     @Override
-    public List<UserResponse> findAll() {
-        return userRepository.findAll().stream()
-                .map(userMapper::toResponse)
-                .toList();
+    public Page<UserSummaryResponse> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable)
+                .map(userMapper::toSummaryResponse);
     }
 
     @Override

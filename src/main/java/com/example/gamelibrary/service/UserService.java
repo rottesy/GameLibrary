@@ -5,10 +5,13 @@ import com.example.gamelibrary.model.dto.response.CollectionResponse;
 import com.example.gamelibrary.model.dto.response.GameResponse;
 import com.example.gamelibrary.model.dto.response.ReviewResponse;
 import com.example.gamelibrary.model.dto.response.UserResponse;
+import com.example.gamelibrary.model.dto.response.UserSummaryResponse;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
-    List<UserResponse> findAll();
+    Page<UserSummaryResponse> findAll(Pageable pageable);
 
     UserResponse findById(Long id);
 

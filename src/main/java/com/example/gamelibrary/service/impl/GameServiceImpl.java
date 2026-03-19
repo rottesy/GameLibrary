@@ -28,15 +28,17 @@ import com.example.gamelibrary.repository.GameRepository;
 import com.example.gamelibrary.repository.GenreRepository;
 import com.example.gamelibrary.repository.ReviewRepository;
 import com.example.gamelibrary.repository.UserRepository;
+import com.example.gamelibrary.repository.projection.GameAchievementSearchNativeProjection;
 import com.example.gamelibrary.service.GameService;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -130,11 +132,10 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Page<GameResponse> findByAchievementsWithJpql(
+    public List<GameResponse> findByAchievementsWithJpql(
             String achievementName,
             String achievementDescription,
-            Integer minRating,
-            Pageable pageable
+            Integer minRating
     ) {
         String normalizedAchievementName = normalizeFilter(achievementName);
         String normalizedAchievementDescription = normalizeFilter(achievementDescription);
@@ -142,23 +143,22 @@ public class GameServiceImpl implements GameService {
                 "findByAchievementsWithJpql",
                 normalizedAchievementName,
                 normalizedAchievementDescription,
-                minRating,
-                pageable
+                minRating
         );
         return cacheManager.computeIfAbsent(cacheKey, () -> gameRepository.findByAchievementsWithJpql(
                 normalizedAchievementName,
                 normalizedAchievementDescription,
-                minRating,
-                pageable
-        ).map(gameMapper::toResponse));
+                minRating
+        ).stream()
+                .map(gameMapper::toResponse)
+                .toList());
     }
 
     @Override
-    public Page<GameResponse> findByAchievementsWithNative(
+    public List<GameResponse> findByAchievementsWithNative(
             String achievementName,
             String achievementDescription,
-            Integer minRating,
-            Pageable pageable
+            Integer minRating
     ) {
         String normalizedAchievementName = normalizeFilter(achievementName);
         String normalizedAchievementDescription = normalizeFilter(achievementDescription);
@@ -166,15 +166,15 @@ public class GameServiceImpl implements GameService {
                 "findByAchievementsWithNative",
                 normalizedAchievementName,
                 normalizedAchievementDescription,
-                minRating,
-                pageable
+                minRating
         );
         return cacheManager.computeIfAbsent(cacheKey, () -> gameRepository.findByAchievementsWithNative(
                 normalizedAchievementName,
                 normalizedAchievementDescription,
-                minRating,
-                pageable
-        ).map(gameMapper::toResponse));
+                minRating
+        ).stream()
+                .map(this::toGameResponse)
+                .toList());
     }
 
     @Override
@@ -288,20 +288,14 @@ public class GameServiceImpl implements GameService {
             String methodName,
             String achievementName,
             String achievementDescription,
-            Integer minRating,
-            Pageable pageable
+            Integer minRating
     ) {
-        int pageNumber = pageable.isPaged() ? pageable.getPageNumber() : -1;
-        int pageSize = pageable.isPaged() ? pageable.getPageSize() : -1;
         return new CacheKey(
                 Game.class,
                 methodName,
                 achievementName,
                 achievementDescription,
-                minRating,
-                pageNumber,
-                pageSize,
-                pageable.getSort().toString()
+                minRating
         );
     }
 
@@ -334,5 +328,28 @@ public class GameServiceImpl implements GameService {
                 .map(achievementMapper::toResponse)
                 .toList();
         return new GameWithAchievementsResponse(gameMapper.toResponse(game), achievements);
+    }
+
+    private GameResponse toGameResponse(GameAchievementSearchNativeProjection projection) {
+        return new GameResponse(
+                projection.getId(),
+                projection.getTitle(),
+                projection.getDescription(),
+                projection.getReleaseDate(),
+                projection.getRating(),
+                projection.getDeveloperId(),
+                parseGenreIds(projection.getGenreIdsCsv())
+        );
+    }
+
+    private Set<Long> parseGenreIds(String genreIdsCsv) {
+        if (genreIdsCsv == null || genreIdsCsv.isBlank()) {
+            return Collections.emptySet();
+        }
+        return Arrays.stream(genreIdsCsv.split(","))
+                .map(String::trim)
+                .filter(value -> !value.isEmpty())
+                .map(Long::valueOf)
+                .collect(java.util.stream.Collectors.toCollection(LinkedHashSet::new));
     }
 }

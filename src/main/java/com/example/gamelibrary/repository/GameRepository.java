@@ -1,14 +1,15 @@
 package com.example.gamelibrary.repository;
 
 import com.example.gamelibrary.model.entity.Game;
+import com.example.gamelibrary.repository.projection.GameAchievementSearchNativeProjection;
 import java.time.LocalDate;
 import java.util.List;
-import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -35,37 +36,8 @@ public interface GameRepository extends JpaRepository<Game, Long> {
                     select distinct g
                     from Game g
                     join g.achievements a
-                    where (:achievementName = ''
-                        or lower(a.name) like lower(concat('%', :achievementName, '%')))
-                        and (:achievementDescription = ''
-                        or lower(coalesce(a.description, ''))
-                        like lower(concat('%', :achievementDescription, '%')))
-                        and (:minRating is null or g.rating >= :minRating)
-            """,
-            countQuery = """
-                    select count(distinct g.id)
-                    from Game g
-                    join g.achievements a
-                    where (:achievementName = ''
-                        or lower(a.name) like lower(concat('%', :achievementName, '%')))
-                        and (:achievementDescription = ''
-                        or lower(coalesce(a.description, ''))
-                        like lower(concat('%', :achievementDescription, '%')))
-                        and (:minRating is null or g.rating >= :minRating)
-            """
-    )
-    Page<Game> findByAchievementsWithJpql(
-            @Param("achievementName") String achievementName,
-            @Param("achievementDescription") String achievementDescription,
-            @Param("minRating") Integer minRating,
-            Pageable pageable
-    );
-
-    @Query(
-            value = """
-                    select distinct g.*
-                    from games g
-                    join achievements a on a.game_id = g.id
+                    left join fetch g.developer
+                    left join fetch g.genres
                     where (:achievementName = ''
                         or lower(a.name) like lower(concat('%', :achievementName, '%')))
                         and (:achievementDescription = ''
@@ -73,25 +45,42 @@ public interface GameRepository extends JpaRepository<Game, Long> {
                         like lower(concat('%', :achievementDescription, '%')))
                         and (:minRating is null or g.rating >= :minRating)
                     order by g.id
-            """,
-            countQuery = """
-                    select count(distinct g.id)
+            """
+    )
+    List<Game> findByAchievementsWithJpql(
+            @Param("achievementName") String achievementName,
+            @Param("achievementDescription") String achievementDescription,
+            @Param("minRating") Integer minRating
+    );
+
+    @Query(
+            value = """
+                    select
+                        g.id as id,
+                        g.title as title,
+                        g.description as description,
+                        g.release_date as "releaseDate",
+                        g.rating as rating,
+                        g.developer_id as "developerId",
+                        coalesce(string_agg(distinct gg.genre_id::text, ','), '') as "genreIdsCsv"
                     from games g
                     join achievements a on a.game_id = g.id
+                    left join game_genres gg on gg.game_id = g.id
                     where (:achievementName = ''
                         or lower(a.name) like lower(concat('%', :achievementName, '%')))
                         and (:achievementDescription = ''
                         or lower(coalesce(a.description, ''))
                         like lower(concat('%', :achievementDescription, '%')))
                         and (:minRating is null or g.rating >= :minRating)
+                    group by g.id, g.title, g.description, g.release_date, g.rating, g.developer_id
+                    order by g.id
             """,
             nativeQuery = true
     )
-    Page<Game> findByAchievementsWithNative(
+    List<GameAchievementSearchNativeProjection> findByAchievementsWithNative(
             @Param("achievementName") String achievementName,
             @Param("achievementDescription") String achievementDescription,
-            @Param("minRating") Integer minRating,
-            Pageable pageable
+            @Param("minRating") Integer minRating
     );
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)

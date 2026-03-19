@@ -13,9 +13,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -113,34 +110,30 @@ public class GameController {
     @GetMapping("/search/by-achievements/jpql")
     @Operation(summary = "Search games by achievement filters using JPQL")
     @ApiResponse(responseCode = "200", description = "Search results returned")
-    public ResponseEntity<Page<GameResponse>> searchByAchievementsWithJpql(
+    public ResponseEntity<List<GameResponse>> searchByAchievementsWithJpql(
             @RequestParam(name = "achievementName", required = false) String achievementName,
             @RequestParam(name = "achievementDescription", required = false) String achievementDescription,
-            @RequestParam(name = "minRating", required = false) Integer minRating,
-            @ParameterObject Pageable pageable
+            @RequestParam(name = "minRating", required = false) Integer minRating
     ) {
         return ResponseEntity.ok(gameService.findByAchievementsWithJpql(
                 achievementName,
                 achievementDescription,
-                minRating,
-                pageable
+                minRating
         ));
     }
 
     @GetMapping("/search/by-achievements/native")
     @Operation(summary = "Search games by achievement filters using native SQL")
     @ApiResponse(responseCode = "200", description = "Search results returned")
-    public ResponseEntity<Page<GameResponse>> searchByAchievementsWithNative(
+    public ResponseEntity<List<GameResponse>> searchByAchievementsWithNative(
             @RequestParam(name = "achievementName", required = false) String achievementName,
             @RequestParam(name = "achievementDescription", required = false) String achievementDescription,
-            @RequestParam(name = "minRating", required = false) Integer minRating,
-            @ParameterObject Pageable pageable
+            @RequestParam(name = "minRating", required = false) Integer minRating
     ) {
         return ResponseEntity.ok(gameService.findByAchievementsWithNative(
                 achievementName,
                 achievementDescription,
-                minRating,
-                pageable
+                minRating
         ));
     }
 

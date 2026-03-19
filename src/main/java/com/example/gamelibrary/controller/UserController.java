@@ -5,6 +5,7 @@ import com.example.gamelibrary.model.dto.response.UserResponse;
 import com.example.gamelibrary.model.dto.response.GameResponse;
 import com.example.gamelibrary.model.dto.response.ReviewResponse;
 import com.example.gamelibrary.model.dto.response.CollectionResponse;
+import com.example.gamelibrary.model.dto.response.UserSummaryResponse;
 import com.example.gamelibrary.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,6 +13,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,10 +36,10 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    @Operation(summary = "Get all users")
+    @Operation(summary = "Get all users with pagination")
     @ApiResponse(responseCode = "200", description = "Users returned")
-    public ResponseEntity<List<UserResponse>> getAll() {
-        return ResponseEntity.ok(userService.findAll());
+    public ResponseEntity<Page<UserSummaryResponse>> getAll(@ParameterObject Pageable pageable) {
+        return ResponseEntity.ok(userService.findAll(pageable));
     }
 
     @GetMapping("/{id}")
