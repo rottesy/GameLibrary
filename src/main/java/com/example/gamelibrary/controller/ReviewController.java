@@ -7,10 +7,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/reviews")
+@Validated
 @Tag(name = "Reviews", description = "Review CRUD operations for games")
 public class ReviewController {
 
@@ -39,21 +42,21 @@ public class ReviewController {
     @Operation(summary = "Get review by id")
     @ApiResponse(responseCode = "200", description = "Review found")
     @ApiResponse(responseCode = "404", description = "Review not found")
-    public ResponseEntity<ReviewResponse> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<ReviewResponse> getById(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(reviewService.findById(id));
     }
 
     @GetMapping("/game/{gameId}")
     @Operation(summary = "Get all reviews for a specific game")
     @ApiResponse(responseCode = "200", description = "Reviews returned")
-    public ResponseEntity<List<ReviewResponse>> getByGameId(@PathVariable("gameId") Long gameId) {
+    public ResponseEntity<List<ReviewResponse>> getByGameId(@PathVariable("gameId") @Positive Long gameId) {
         return ResponseEntity.ok(reviewService.findByGameId(gameId));
     }
 
     @GetMapping("/user/{userId}")
     @Operation(summary = "Get all reviews by a specific user")
     @ApiResponse(responseCode = "200", description = "Reviews returned")
-    public ResponseEntity<List<ReviewResponse>> getByUserId(@PathVariable("userId") Long userId) {
+    public ResponseEntity<List<ReviewResponse>> getByUserId(@PathVariable("userId") @Positive Long userId) {
         return ResponseEntity.ok(reviewService.findByUserId(userId));
     }
 
@@ -72,7 +75,7 @@ public class ReviewController {
     @ApiResponse(responseCode = "400", description = "Validation error")
     @ApiResponse(responseCode = "404", description = "Review not found")
     public ResponseEntity<ReviewResponse> update(
-            @PathVariable("id") Long id,
+            @PathVariable("id") @Positive Long id,
             @Valid @RequestBody ReviewRequest request
     ) {
         return ResponseEntity.ok(reviewService.update(id, request));
@@ -82,7 +85,7 @@ public class ReviewController {
     @Operation(summary = "Delete review")
     @ApiResponse(responseCode = "204", description = "Review deleted")
     @ApiResponse(responseCode = "404", description = "Review not found")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") @Positive Long id) {
         reviewService.delete(id);
         return ResponseEntity.noContent().build();
     }

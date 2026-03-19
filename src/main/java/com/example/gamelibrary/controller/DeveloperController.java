@@ -8,10 +8,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/developers")
+@Validated
 @Tag(name = "Developers", description = "Game developers CRUD operations")
 public class DeveloperController {
 
@@ -41,7 +45,7 @@ public class DeveloperController {
     @Operation(summary = "Get developer by id")
     @ApiResponse(responseCode = "200", description = "Developer found")
     @ApiResponse(responseCode = "404", description = "Developer not found")
-    public ResponseEntity<DeveloperResponse> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<DeveloperResponse> getById(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(developerService.findById(id));
     }
 
@@ -49,14 +53,14 @@ public class DeveloperController {
     @Operation(summary = "Get all games by developer")
     @ApiResponse(responseCode = "200", description = "Games returned")
     @ApiResponse(responseCode = "404", description = "Developer not found")
-    public ResponseEntity<List<GameResponse>> getGamesByDeveloper(@PathVariable("id") Long id) {
+    public ResponseEntity<List<GameResponse>> getGamesByDeveloper(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(developerService.findGamesByDeveloperId(id));
     }
 
     @GetMapping("/search")
     @Operation(summary = "Search developers by name")
     @ApiResponse(responseCode = "200", description = "Developers returned")
-    public ResponseEntity<List<DeveloperResponse>> searchByName(@RequestParam("name") String name) {
+    public ResponseEntity<List<DeveloperResponse>> searchByName(@RequestParam("name") @NotBlank String name) {
         return ResponseEntity.ok(developerService.searchByName(name));
     }
 
@@ -75,7 +79,7 @@ public class DeveloperController {
     @ApiResponse(responseCode = "400", description = "Validation error")
     @ApiResponse(responseCode = "404", description = "Developer not found")
     public ResponseEntity<DeveloperResponse> update(
-            @PathVariable("id") Long id,
+            @PathVariable("id") @Positive Long id,
             @Valid @RequestBody DeveloperRequest request
     ) {
         return ResponseEntity.ok(developerService.update(id, request));
@@ -86,7 +90,7 @@ public class DeveloperController {
     @ApiResponse(responseCode = "204", description = "Developer deleted")
     @ApiResponse(responseCode = "404", description = "Developer not found")
     @ApiResponse(responseCode = "409", description = "Developer has games assigned")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") @Positive Long id) {
         developerService.delete(id);
         return ResponseEntity.noContent().build();
     }

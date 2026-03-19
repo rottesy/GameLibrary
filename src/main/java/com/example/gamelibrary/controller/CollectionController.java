@@ -8,10 +8,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/collections")
+@Validated
 @Tag(name = "Game Collections", description = "Game collection CRUD operations")
 public class CollectionController {
 
@@ -40,14 +43,14 @@ public class CollectionController {
     @Operation(summary = "Get collection by id")
     @ApiResponse(responseCode = "200", description = "Collection found")
     @ApiResponse(responseCode = "404", description = "Collection not found")
-    public ResponseEntity<CollectionResponse> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<CollectionResponse> getById(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(collectionService.findById(id));
     }
 
     @GetMapping("/user/{userId}")
     @Operation(summary = "Get all collections by user")
     @ApiResponse(responseCode = "200", description = "Collections returned")
-    public ResponseEntity<List<CollectionResponse>> getByUserId(@PathVariable("userId") Long userId) {
+    public ResponseEntity<List<CollectionResponse>> getByUserId(@PathVariable("userId") @Positive Long userId) {
         return ResponseEntity.ok(collectionService.findByUserId(userId));
     }
 
@@ -55,7 +58,7 @@ public class CollectionController {
     @Operation(summary = "Get all games in a collection")
     @ApiResponse(responseCode = "200", description = "Games returned")
     @ApiResponse(responseCode = "404", description = "Collection not found")
-    public ResponseEntity<List<GameResponse>> getGamesInCollection(@PathVariable("id") Long id) {
+    public ResponseEntity<List<GameResponse>> getGamesInCollection(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(collectionService.findGamesInCollection(id));
     }
 
@@ -73,8 +76,8 @@ public class CollectionController {
     @ApiResponse(responseCode = "200", description = "Game added to collection")
     @ApiResponse(responseCode = "404", description = "Collection or game not found")
     public ResponseEntity<CollectionResponse> addGameToCollection(
-            @PathVariable("collectionId") Long collectionId,
-            @PathVariable("gameId") Long gameId
+            @PathVariable("collectionId") @Positive Long collectionId,
+            @PathVariable("gameId") @Positive Long gameId
     ) {
         return ResponseEntity.ok(collectionService.addGameToCollection(collectionId, gameId));
     }
@@ -85,7 +88,7 @@ public class CollectionController {
     @ApiResponse(responseCode = "400", description = "Validation error")
     @ApiResponse(responseCode = "404", description = "Collection not found")
     public ResponseEntity<CollectionResponse> update(
-            @PathVariable("id") Long id,
+            @PathVariable("id") @Positive Long id,
             @Valid @RequestBody CollectionRequest request
     ) {
         return ResponseEntity.ok(collectionService.update(id, request));
@@ -96,8 +99,8 @@ public class CollectionController {
     @ApiResponse(responseCode = "200", description = "Game removed from collection")
     @ApiResponse(responseCode = "404", description = "Collection or game not found")
     public ResponseEntity<CollectionResponse> removeGameFromCollection(
-            @PathVariable("collectionId") Long collectionId,
-            @PathVariable("gameId") Long gameId
+            @PathVariable("collectionId") @Positive Long collectionId,
+            @PathVariable("gameId") @Positive Long gameId
     ) {
         return ResponseEntity.ok(collectionService.removeGameFromCollection(collectionId, gameId));
     }
@@ -106,7 +109,7 @@ public class CollectionController {
     @Operation(summary = "Delete collection")
     @ApiResponse(responseCode = "204", description = "Collection deleted")
     @ApiResponse(responseCode = "404", description = "Collection not found")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") @Positive Long id) {
         collectionService.delete(id);
         return ResponseEntity.noContent().build();
     }

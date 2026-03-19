@@ -8,10 +8,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/genres")
+@Validated
 @Tag(name = "Genres", description = "Game genres CRUD operations")
 public class GenreController {
 
@@ -41,7 +45,7 @@ public class GenreController {
     @Operation(summary = "Get genre by id")
     @ApiResponse(responseCode = "200", description = "Genre found")
     @ApiResponse(responseCode = "404", description = "Genre not found")
-    public ResponseEntity<GenreResponse> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<GenreResponse> getById(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(genreService.findById(id));
     }
 
@@ -49,14 +53,14 @@ public class GenreController {
     @Operation(summary = "Get all games by genre")
     @ApiResponse(responseCode = "200", description = "Games returned")
     @ApiResponse(responseCode = "404", description = "Genre not found")
-    public ResponseEntity<List<GameResponse>> getGamesByGenre(@PathVariable("id") Long id) {
+    public ResponseEntity<List<GameResponse>> getGamesByGenre(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(genreService.findGamesByGenreId(id));
     }
 
     @GetMapping("/search")
     @Operation(summary = "Search genres by name")
     @ApiResponse(responseCode = "200", description = "Genres returned")
-    public ResponseEntity<List<GenreResponse>> searchByName(@RequestParam("name") String name) {
+    public ResponseEntity<List<GenreResponse>> searchByName(@RequestParam("name") @NotBlank String name) {
         return ResponseEntity.ok(genreService.searchByName(name));
     }
 
@@ -75,7 +79,7 @@ public class GenreController {
     @ApiResponse(responseCode = "400", description = "Validation error")
     @ApiResponse(responseCode = "404", description = "Genre not found")
     public ResponseEntity<GenreResponse> update(
-            @PathVariable("id") Long id,
+            @PathVariable("id") @Positive Long id,
             @Valid @RequestBody GenreRequest request
     ) {
         return ResponseEntity.ok(genreService.update(id, request));
@@ -86,7 +90,7 @@ public class GenreController {
     @ApiResponse(responseCode = "204", description = "Genre deleted")
     @ApiResponse(responseCode = "404", description = "Genre not found")
     @ApiResponse(responseCode = "409", description = "Genre has games assigned")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") @Positive Long id) {
         genreService.delete(id);
         return ResponseEntity.noContent().build();
     }

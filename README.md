@@ -63,3 +63,4 @@ SQL‑логи включены в `src/main/resources/application.properties`.
 - `docs/n-plus-one-explanation.md`
 - `docs/transactions-explanation.md`
 - `docs/search-cache-explanation.md`
+- `docs/error-validation-logging-aop-swagger-explanation.md`

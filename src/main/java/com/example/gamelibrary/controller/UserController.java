@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/users")
+@Validated
 @Tag(name = "Users", description = "User CRUD operations and game library management")
 public class UserController {
 
@@ -46,7 +49,7 @@ public class UserController {
     @Operation(summary = "Get user by id")
     @ApiResponse(responseCode = "200", description = "User found")
     @ApiResponse(responseCode = "404", description = "User not found")
-    public ResponseEntity<UserResponse> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<UserResponse> getById(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
@@ -54,7 +57,7 @@ public class UserController {
     @Operation(summary = "Get user's game library")
     @ApiResponse(responseCode = "200", description = "Games returned")
     @ApiResponse(responseCode = "404", description = "User not found")
-    public ResponseEntity<List<GameResponse>> getUserGames(@PathVariable("id") Long id) {
+    public ResponseEntity<List<GameResponse>> getUserGames(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(userService.findUserGames(id));
     }
 
@@ -62,7 +65,7 @@ public class UserController {
     @Operation(summary = "Get user's reviews")
     @ApiResponse(responseCode = "200", description = "Reviews returned")
     @ApiResponse(responseCode = "404", description = "User not found")
-    public ResponseEntity<List<ReviewResponse>> getUserReviews(@PathVariable("id") Long id) {
+    public ResponseEntity<List<ReviewResponse>> getUserReviews(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(userService.findUserReviews(id));
     }
 
@@ -70,7 +73,7 @@ public class UserController {
     @Operation(summary = "Get user's game collections")
     @ApiResponse(responseCode = "200", description = "Collections returned")
     @ApiResponse(responseCode = "404", description = "User not found")
-    public ResponseEntity<List<CollectionResponse>> getUserCollections(@PathVariable("id") Long id) {
+    public ResponseEntity<List<CollectionResponse>> getUserCollections(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(userService.findUserCollections(id));
     }
 
@@ -78,7 +81,7 @@ public class UserController {
     @Operation(summary = "Get user's wishlist")
     @ApiResponse(responseCode = "200", description = "Wishlist returned")
     @ApiResponse(responseCode = "404", description = "User not found")
-    public ResponseEntity<List<GameResponse>> getUserWishlist(@PathVariable("id") Long id) {
+    public ResponseEntity<List<GameResponse>> getUserWishlist(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(userService.findUserWishlist(id));
     }
 
@@ -87,8 +90,8 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "Game added to library")
     @ApiResponse(responseCode = "404", description = "User or game not found")
     public ResponseEntity<UserResponse> addGameToLibrary(
-            @PathVariable("userId") Long userId,
-            @PathVariable("gameId") Long gameId
+            @PathVariable("userId") @Positive Long userId,
+            @PathVariable("gameId") @Positive Long gameId
     ) {
         return ResponseEntity.ok(userService.addGameToLibrary(userId, gameId));
     }
@@ -98,8 +101,8 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "Game added to wishlist")
     @ApiResponse(responseCode = "404", description = "User or game not found")
     public ResponseEntity<UserResponse> addGameToWishlist(
-            @PathVariable("userId") Long userId,
-            @PathVariable("gameId") Long gameId
+            @PathVariable("userId") @Positive Long userId,
+            @PathVariable("gameId") @Positive Long gameId
     ) {
         return ResponseEntity.ok(userService.addGameToWishlist(userId, gameId));
     }
@@ -119,7 +122,7 @@ public class UserController {
     @ApiResponse(responseCode = "400", description = "Validation error")
     @ApiResponse(responseCode = "404", description = "User not found")
     public ResponseEntity<UserResponse> update(
-            @PathVariable("id") Long id,
+            @PathVariable("id") @Positive Long id,
             @Valid @RequestBody UserRequest request
     ) {
         return ResponseEntity.ok(userService.update(id, request));
@@ -130,8 +133,8 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "Game removed from library")
     @ApiResponse(responseCode = "404", description = "User or game not found")
     public ResponseEntity<UserResponse> removeGameFromLibrary(
-            @PathVariable("userId") Long userId,
-            @PathVariable("gameId") Long gameId
+            @PathVariable("userId") @Positive Long userId,
+            @PathVariable("gameId") @Positive Long gameId
     ) {
         return ResponseEntity.ok(userService.removeGameFromLibrary(userId, gameId));
     }
@@ -141,8 +144,8 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "Game removed from wishlist")
     @ApiResponse(responseCode = "404", description = "User or game not found")
     public ResponseEntity<UserResponse> removeGameFromWishlist(
-            @PathVariable("userId") Long userId,
-            @PathVariable("gameId") Long gameId
+            @PathVariable("userId") @Positive Long userId,
+            @PathVariable("gameId") @Positive Long gameId
     ) {
         return ResponseEntity.ok(userService.removeGameFromWishlist(userId, gameId));
     }
@@ -151,7 +154,7 @@ public class UserController {
     @Operation(summary = "Delete user")
     @ApiResponse(responseCode = "204", description = "User deleted")
     @ApiResponse(responseCode = "404", description = "User not found")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") @Positive Long id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }

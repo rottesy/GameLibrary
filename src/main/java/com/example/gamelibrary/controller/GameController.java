@@ -11,10 +11,15 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/games")
+@Validated
 @Tag(name = "Games", description = "Game CRUD operations")
 public class GameController {
 
@@ -40,7 +46,7 @@ public class GameController {
             @Parameter(description = "Game genre filter")
             @RequestParam(name = "genre", required = false) String genre,
             @Parameter(description = "Minimum rating filter (1-10)")
-            @RequestParam(name = "minRating", required = false) Integer minRating,
+            @RequestParam(name = "minRating", required = false) @Min(1) @Max(10) Integer minRating,
             @Parameter(description = "Developer filter")
             @RequestParam(name = "developer", required = false) String developer
     ) {
@@ -84,7 +90,7 @@ public class GameController {
     @Operation(summary = "Get top rated games")
     @ApiResponse(responseCode = "200", description = "Top rated games returned")
     public ResponseEntity<List<GameResponse>> getTopRated(
-            @RequestParam(name = "limit", defaultValue = "10") Integer limit
+            @RequestParam(name = "limit", defaultValue = "10") @Min(1) @Max(100) Integer limit
     ) {
         return ResponseEntity.ok(gameService.findTopRated(limit));
     }
@@ -93,7 +99,7 @@ public class GameController {
     @Operation(summary = "Get new releases")
     @ApiResponse(responseCode = "200", description = "New releases returned")
     public ResponseEntity<List<GameResponse>> getNewReleases(
-            @RequestParam(name = "days", defaultValue = "30") Integer days
+            @RequestParam(name = "days", defaultValue = "30") @Min(1) Integer days
     ) {
         return ResponseEntity.ok(gameService.findNewReleases(days));
     }
@@ -102,7 +108,7 @@ public class GameController {
     @Operation(summary = "Search games by keyword")
     @ApiResponse(responseCode = "200", description = "Search results returned")
     public ResponseEntity<List<GameResponse>> search(
-            @RequestParam(name = "keyword") String keyword
+            @RequestParam(name = "keyword") @NotBlank String keyword
     ) {
         return ResponseEntity.ok(gameService.searchByKeyword(keyword));
     }
@@ -113,7 +119,7 @@ public class GameController {
     public ResponseEntity<List<GameResponse>> searchByAchievementsWithJpql(
             @RequestParam(name = "achievementName", required = false) String achievementName,
             @RequestParam(name = "achievementDescription", required = false) String achievementDescription,
-            @RequestParam(name = "minRating", required = false) Integer minRating
+            @RequestParam(name = "minRating", required = false) @Min(1) @Max(10) Integer minRating
     ) {
         return ResponseEntity.ok(gameService.findByAchievementsWithJpql(
                 achievementName,
@@ -128,7 +134,7 @@ public class GameController {
     public ResponseEntity<List<GameResponse>> searchByAchievementsWithNative(
             @RequestParam(name = "achievementName", required = false) String achievementName,
             @RequestParam(name = "achievementDescription", required = false) String achievementDescription,
-            @RequestParam(name = "minRating", required = false) Integer minRating
+            @RequestParam(name = "minRating", required = false) @Min(1) @Max(10) Integer minRating
     ) {
         return ResponseEntity.ok(gameService.findByAchievementsWithNative(
                 achievementName,
@@ -141,7 +147,7 @@ public class GameController {
     @Operation(summary = "Get game by id")
     @ApiResponse(responseCode = "200", description = "Game found")
     @ApiResponse(responseCode = "404", description = "Game not found")
-    public ResponseEntity<GameResponse> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<GameResponse> getById(@PathVariable("id") @Positive Long id) {
         return ResponseEntity.ok(gameService.findById(id));
     }
 
@@ -188,7 +194,7 @@ public class GameController {
     @ApiResponse(responseCode = "400", description = "Validation error")
     @ApiResponse(responseCode = "404", description = "Game not found")
     public ResponseEntity<GameResponse> update(
-            @PathVariable("id") Long id,
+            @PathVariable("id") @Positive Long id,
             @Valid @RequestBody GameRequest request
     ) {
         return ResponseEntity.ok(gameService.update(id, request));
@@ -198,7 +204,7 @@ public class GameController {
     @Operation(summary = "Delete game")
     @ApiResponse(responseCode = "204", description = "Game deleted")
     @ApiResponse(responseCode = "404", description = "Game not found")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") @Positive Long id) {
         gameService.delete(id);
         return ResponseEntity.noContent().build();
     }
